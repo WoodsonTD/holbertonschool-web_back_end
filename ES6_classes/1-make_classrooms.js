@@ -7,6 +7,6 @@ function initializeRooms() {
 
 const rooms = initializeRooms();
 console.log(rooms);
-console.log(rooms[0]._maxStuendtsSize);
+console.log(rooms[0]._maxStudentsSize);
 console.log(rooms[1]._maxStudentsSize);
 console.log(rooms[2]._maxStudentsSize);
