@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import ClassRoom from './0-classroom';
 
-function initializeRooms() {
+export default function initializeRooms() {
   const sizes = [19, 20, 34];
   return sizes.map((size) => new ClassRoom(size));
 }
