@@ -1,15 +1,16 @@
-/* eslint-disable-next-line no-unused-vars */
-class Building {
+export default class Building {
   constructor(sqft) {
     this._sqft = sqft;
   }
 
-  /* eslint-disable-next-line no-unused-vars */
   get sqft() {
     return this._sqft;
   }
 
-  /* eslint-disable-next-line class-methods-use-this */
+  set sqft(sqft) {
+    this._sqft = sqft;
+  }
+
   evacuationWarningMessage() {
     throw new Error('Class extending Building must override evacuationWarningMessage');
   }
