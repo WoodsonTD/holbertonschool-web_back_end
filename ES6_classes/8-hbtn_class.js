@@ -1,20 +1,16 @@
-/* eslint-disable no-unused-vars */
-
-class Airport {
-  constructor(name, code) {
-    this._name = name;
-    this._code = code;
+export default class HolbertonClass {
+  constructor(size, location) {
+    this._size = size;
+    this._location = location;
   }
 
-  get name() {
-    return this._name;
-  }
-
-  get code() {
-    return this._code;
-  }
-
-  toString() {
-    return this._code;
+  [Symbol.toPrimitive](hint) {
+    if (hint === 'number') {
+      return this._size;
+    }
+    if (hint === 'string') {
+      return this._location;
+    }
+    return null;
   }
 }
