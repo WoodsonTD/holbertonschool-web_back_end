@@ -1,0 +1,33 @@
+{
+	"folders": [
+		{
+			"path": "../../holbertonschool-AirBnB_clone_v3"
+		},
+		{
+			"path": "../../holbertonschool-system_engineering-devops"
+		},
+		{
+			"path": "../../holbertonschool-higher_level_programming"
+		},
+		{
+			"path": "../../.vscode-server"
+		},
+		{
+			"path": "../../try-hack_me"
+		},
+		{
+			"path": "../../holbertonschool-AirBnB_clone_v4"
+		},
+		{
+			"name": "STRAIN.gg_Clouds",
+			"path": "../../STRAIN.gg_Clouds"
+		},
+		{
+			"name": "holbertonschool-web_back_end",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "STRAIN.gg_Clouds"
+	}
+}

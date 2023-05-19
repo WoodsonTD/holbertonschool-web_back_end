@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 export default class Airport {
   constructor(name, code) {
     this._name = name;
