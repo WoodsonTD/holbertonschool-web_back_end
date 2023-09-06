@@ -1,4 +1,4 @@
-#!/usr/bin/evn python3
+#!/usr/bin/env python3
 """takes a sting 'k' and an integer or float 'v' as arguments and
 returns a tuple. the first element of the tuple is 'k', and the
 second element is the square of 'v', annotated as a float."""
