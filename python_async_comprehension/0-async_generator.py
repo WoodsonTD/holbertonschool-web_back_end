@@ -7,9 +7,10 @@ in each iteration."""
 
 import asyncio
 import random
+from typing import AsyncGenerator
 
 
-async def async_generator():
+async def async_generator() -> AsyncGenerator[int, None]:
     """Yields: int: a random number between 0 and 10."""
     for _ in range(10):
         await asyncio.sleep(1)  # wait 1 second
