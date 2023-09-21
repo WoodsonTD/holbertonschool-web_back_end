@@ -6,5 +6,5 @@ import re
 
 
 def filter_datum(fields, redaction, message, separator):
-    regex = re.compile(f"({separator.join(fields)})=([^{separator}]*)")
-    return regex.sub(fr"\1={redaction}", message)
+    return re.sub(fr'({"|".join(fields)})=[^\\{separator}]*',
+                fr'\1={redaction}', message)
