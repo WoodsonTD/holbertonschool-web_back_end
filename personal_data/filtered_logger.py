@@ -5,6 +5,6 @@
 import re
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(fields: list, redaction: str, message: str, separator: str) -> str:
     return re.sub(fr'({"|".join(fields)})=[^\\{separator}]*',
                 fr'\1={redaction}', message)
