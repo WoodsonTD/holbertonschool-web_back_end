@@ -5,7 +5,8 @@
 import re
 from typing import List
 
-
+"""Args: fields, redaction, message, spartor
+Returns: str: the obfuscated log message"""
 def filter_datum(
   fields: List[str], redaction: str, message: str, separator: str) -> str:
     return re.sub(
