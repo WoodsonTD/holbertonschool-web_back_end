@@ -59,3 +59,21 @@ def test_public_repos_url(self, mock_public_repos_url):
         """Test that GithubOrgClient.has_license"""
         test_class = GithubOrgClient("test_org")
         self.assertEqual(test_class.has_license(repo, license_key), expected)
+
+@parameterized_class(
+        ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
+        TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integration test fixtures"""
+    @classmethod
+    def setUpClass(cls):
+        """setUpClass"""
+        cls.get_patcher = patch('requests.get', side_effect=HTTPError)
+
+        cls.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        """tearDownClass"""
+        cls.get_patcher.stop()
