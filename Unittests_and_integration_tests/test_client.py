@@ -10,14 +10,14 @@ from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """TestGithubOrgClient Class"""
+    """TestGithubOrgClient"""
     @parameterized.expand([
         ("google"),
         ("abc"),
     ])
     @patch('client.get_json')
     def test_org(self, org_name, mock_get_json):
-        """ Test that GithubOrgClient.org returns the correct value """
+        """Test that GithubOrgClient.org returns the correct value"""
         mock_payload = {'name': org_name, 'id': 1234}
         mock_get_json.return_value = mock_payload
         test_class = GithubOrgClient(org_name)
