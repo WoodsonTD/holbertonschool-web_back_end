@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Get locale from request
-"""
+"""Get locale from request"""
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
@@ -25,12 +24,12 @@ def index():
     Return:
       1-index.html
     """
-    return render_template('1-index.html')
+    return render_template('3-index.html')
 
 
 @babel.localeselector
 def get_locale():
-    """Determine best match for supported languages
+    """ Determine best match for supported languages
     Return:
       Best language
     """
