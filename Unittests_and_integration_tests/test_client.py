@@ -26,6 +26,8 @@ class TestGithubOrgClient(unittest.TestCase):
         (f'https://api.github.com/orgs/{org_name}')
 
 
+@patch('client.GithubOrgClient._public_repos_url',
+        new_callable=PropertyMock)
 def test_public_repos_url(self, mock_public_repos_url):
     """Test that the result of _public_repos_url is the expected one"""
     expected = 'www.yes.com'
