@@ -4,6 +4,7 @@ import redis
 import uuid
 from typing import Union, Callable
 
+
 class Cache:
     def __init__(self):
         self._redis = redis.Redis()
@@ -14,14 +15,15 @@ class Cache:
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
-    
+
     """convert data back to desired format"""
-    def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int, float]:
+    def get(self, key: str, fn: Callable = None)
+    -> Union[str, bytes, int, float]:
         value = self._redis.get(key)
         if fn is not None:
             return fn(value)
         return value
-    
+
     """parametrize cache.get with correct conversion function"""
     def get_str(self, key: str) -> str:
         return self.get(key, fn=lambda data: data.decode("utf-8"))
@@ -30,7 +32,7 @@ class Cache:
         return self.get(key, fn=int)
 
     def count_calls(method: Callable) -> Callable:
-    @functools.wraps(method)
+        @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         key = method.__qualname__
         count_key = f"{key}:count"
@@ -38,8 +40,10 @@ class Cache:
         return method(self, *args, **kwargs)
     return wrapper
 
+
 # Decorate Cache.store with count_calls
 Cache.store = count_calls(Cache.store)
+
 
 def call_history(method: Callable) -> Callable:
     @functools.wraps(method)
@@ -53,8 +57,10 @@ def call_history(method: Callable) -> Callable:
         return result
     return wrapper
 
+
 # Decorate Cache.store with call_history
 Cache.store = call_history(Cache.store)
+
 
 def replay(cache: Cache):
     method_name = "Cache.store"
@@ -63,5 +69,15 @@ def replay(cache: Cache):
     inputs = cache._redis.lrange(inputs_key, 0, -1)
     outputs = cache._redis.lrange(outputs_key, 0, -1)
     for i, (input_data, output_data) in enumerate(zip(inputs, outputs):
-        print(f"{method_name} was called {i + 1} times:")
-        print(f"{method_name}({input_data}) -> {output_data}")
+                                                  print(f"{method_name}
+                                                  was called {i + 1} times: ")
+                                                  print(f"{method_name}
+                                                  ({input_data}) ->
+                                                  {output_data}")
+
+                                                  if __name__ == "__main__":
+                                                  cache=Cache()
+                                                  cache.store("foo")
+                                                  cache.store("bar")
+                                                  cache.store(42)
+                                                  replay(cache)
