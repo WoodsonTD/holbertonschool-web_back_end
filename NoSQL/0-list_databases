@@ -1,0 +1,2 @@
+// 0-list_databases.js list all databases in MongoDB
+show dbs

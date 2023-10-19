@@ -1,0 +1,2 @@
+// 1-use_or_create_database creates or uses the database 'my_db'
+use my_db
