@@ -1,32 +1,10 @@
 const express = require('express');
 const fs = require('fs');
 const csv = require('csv-parser');
-const path = require('path');
 
 const app = express();
 const port = 1245;
 const databaseFile = process.argv[2];
-
-app.get('/', (req, res) => {
-  res.send('Hello Holberton School!');
-});
-
-app.get('/students', async (req, res) => {
-  try {
-    const studentsData = await readStudentsData(databaseFile);
-    res.send(studentsData);
-  } catch (error) {
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-app.use((req, res) => {
-  res.status(404).send('Not Found');
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
 
 function readStudentsData(databaseFile) {
   return new Promise((resolve, reject) => {
@@ -62,3 +40,24 @@ function readStudentsData(databaseFile) {
       });
   });
 }
+
+app.get('/', (req, res) => {
+  res.send('Hello Holberton School!');
+});
+
+app.get('/students', async (req, res) => {
+  try {
+    const studentsData = await readStudentsData(databaseFile);
+    res.send(studentsData);
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.use((req, res) => {
+  res.status(404).send('Not Found');
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
