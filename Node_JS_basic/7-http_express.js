@@ -1,50 +1,64 @@
 const express = require('express');
 const fs = require('fs');
+const csv = require('csv-parser');
 const path = require('path');
-const csvParser = require('csv-parser');
 
-// Create an Express application
 const app = express();
+const port = 1245;
+const databaseFile = process.argv[2];
 
-// Define a route for the root endpoint that displays "Hello Holberton School!"
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
 
-// Define a route for the /students endpoint
-app.get('/students', (req, res) => {
-  const databaseFile = process.argv[2]; // Get the database file from the command line arguments
-
-  // Check if the database file is provided as an argument
-  if (!databaseFile) {
-    res.status(500).send('Database file not provided.');
-    return;
+app.get('/students', async (req, res) => {
+  try {
+    const studentsData = await readStudentsData(databaseFile);
+    res.send(studentsData);
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
   }
-
-  // Read the CSV file and process the data
-  const students = [];
-  fs.createReadStream(databaseFile)
-    .pipe(csvParser())
-    .on('data', (row) => {
-      if (row && row.Student && row.Filed) {
-        students.push(row.Student);
-      }
-    })
-    .on('end', () => {
-      const response = `
-        This is the list of our students
-        Number of students: ${students.length}
-        List: ${students.join(', ')}
-      `;
-      res.type('text').send(response);
-    });
 });
 
-// Start the server and listen on port 1245
-const server = app.listen(1245, () => {
-  console.log('Server is running on port 1245');
+app.use((req, res) => {
+  res.status(404).send('Not Found');
 });
 
-// Export the Express app
-module.exports = app;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
+function readStudentsData(databaseFile) {
+  return new Promise((resolve, reject) => {
+    const students = { CS: [], SWE: [] };
+
+    if (!databaseFile) {
+      reject(new Error('Database file not provided.'));
+      return;
+    }
+
+    fs.createReadStream(databaseFile)
+      .pipe(csv())
+      .on('data', (row) => {
+        if (row && row.Student && row.Field) {
+          if (row.Field === 'CS') {
+            students.CS.push(row.Student);
+          } else if (row.Field === 'SWE') {
+            students.SWE.push(row.Student);
+          }
+        }
+      })
+      .on('end', () => {
+        const response = `
+          This is the list of our students
+          Number of students: ${students.CS.length + students.SWE.length}
+          Number of students in CS: ${students.CS.length}. List: ${students.CS.join(', ')}
+          Number of students in SWE: ${students.SWE.length}. List: ${students.SWE.join(', ')}
+        `;
+        resolve(response);
+      })
+      .on('error', (error) => {
+        reject(error);
+      });
+  });
+}

@@ -25,7 +25,7 @@ app.use((req, res) => {
 });
 
 // Start the server and listen on port 1245
-const server = app.listen(1245, () => {
+app.listen(1245, () => {
   console.log('Server is running on port 1245');
 });
 
