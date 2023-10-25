@@ -1,46 +1,47 @@
-const express = require('express');
+const http = require('http');
 const fs = require('fs');
 const csvParser = require('csv-parser');
 
-const app = express();
-const port = 1245;
+const app = http.createServer((req, res) => {
+  const { url } = req;
+  res.setHeader('Content-Type', 'text/plain');
 
-app.get('/', (req, res) => {
-  res.send('Hello Holberton School!');
-});
+  if (url === '/') {
+    res.end('Hello Holberton School!');
+  } else if (url === '/students') {
+    const databaseFile = process.argv[2];
 
-app.get('/students', (req, res) => {
-  const databaseFile = process.argv[2]; // Get the database file from the command line arguments
+    if (!databaseFile) {
+      res.statusCode = 500;
+      res.end('Database file not provided.');
+      return;
+    }
 
-  // Check if the database file is provided as an argument
-  if (!databaseFile) {
-    res.status(500).send('Database file not provided.');
-    return;
+    const students = [];
+
+    fs.createReadStream(databaseFile)
+      .pipe(csvParser())
+      .on('data', (row) => {
+        if (row && row.field === 'CS') {
+          students.push(row.firstname);
+        }
+      })
+      .on('end', () => {
+        const response = `
+          This is the list of our CS students
+          Number of CS students: ${students.length}
+          List: ${students.join(', ')}
+        `;
+        res.end(response);
+      });
+  } else {
+    res.statusCode = 404;
+    res.end('Not Found');
   }
-
-  const students = [];
-
-  fs.createReadStream(databaseFile)
-    .pipe(csvParser())
-    .on('data', (row) => {
-      if (row && row.Student && row.Field) {
-        students.push(row.Student);
-      }
-    })
-    .on('end', () => {
-      const response = `
-        This is the list of our students
-        Number of students: ${students.length}
-        List: ${students.join(', ')}
-      `;
-      res.send(response);
-    });
 });
 
-app.use((req, res) => {
-  res.status(404).send('Not Found');
+app.listen(1245, () => {
+  console.log('Server is running on port 1245');
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+module.exports = app;
