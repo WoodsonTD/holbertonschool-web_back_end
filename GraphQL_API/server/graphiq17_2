@@ -1,0 +1,8 @@
+mutation {
+  addTask(title: "New Task", weight: 1, description: "Task description", projectId: "REPLACE_WITH_PROJECT_ID") {
+    id
+    title
+    weight
+    description
+  }
+}

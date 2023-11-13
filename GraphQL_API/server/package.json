@@ -1,0 +1,17 @@
+{
+  "name": "graphql-server",
+  "version": "1.0.0",
+  "description": "A GraphQL server for my project",
+  "main": "app.js",
+  "scripts": {
+    "test": "Graph"
+  },
+  "author": "Taylor Woodson",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^16.8.1",
+    "lodash": "^4.17.21"
+  }
+}
